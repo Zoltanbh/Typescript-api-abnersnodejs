@@ -14,7 +14,7 @@ const insertProduct = async (product: Product) => {
 }
 
 const updateProduct = async (product: Product) => {
-   await dbQuery(UPDATE product SET name = ?, price = ? WHERE id = ?, [product.name, product.price, product.id])
+   await dbQuery(`UPDATE product SET name = ?, price = ? WHERE id = ?`, [product.name, product.price, product.id])
    return getProduct(product.id);
 }
 
