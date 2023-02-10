@@ -10,9 +10,33 @@ export type Product = {
 const insertProduct = async (product: Product) => {
   await dbQuery(`INSERT INTO product (name, price) VALUES(?, ?)`, [product.name, product.price])
   let retorno = await dbQuery(`SELECT seq AS Id FROM sqlite_sequence WHERE name = 'product'`);
-  return retorno[0].Id as number | undefined;
+  return retorno[0].Id;
+}
+
+const updateProduct = async (product: Product) => {
+   await dbQuery(UPDATE product SET name = ?, price = ? WHERE id = ?, [product.name, product.price, product.id])
+   return getProduct(product.id);
+}
+
+
+const listProducts = async () => {
+  const retorno = await dbQuery(`SELECT * FROM product`);
+  return retorno as Product[];
+}
+
+const getProduct = async (id: number) => {
+  const retorno = await dbQuery(`SELECT * FROM product WHERE id = ?`, [id]);
+  return retorno as Product | undefined;
+}
+
+const deleteProduct = async (id: number) => {
+   await dbQuery(`DELETE FROM product WHERE id = ?`, [id]);
 }
 
 export const productModel = {
-  insertProduct
+  insertProduct,
+  listProducts,
+  getProduct,
+  deleteProduct,
+  updateProduct
 }
