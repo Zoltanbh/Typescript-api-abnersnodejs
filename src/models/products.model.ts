@@ -1,4 +1,4 @@
-import { dbQuery } from "../services/db";
+import { dbQuery, dbQueryFirst } from "../services/db";
 
 
 export type Product = {
@@ -24,13 +24,13 @@ const listProducts = async () => {
   return retorno as Product[];
 }
 
-const getProduct = async (id: number) => {
-  const retorno = await dbQuery(`SELECT * FROM product WHERE id = ?`, [id]);
+const getProduct = async (id: number ) => {
+  const retorno = await dbQueryFirst(`SELECT * FROM product WHERE id = ?`, [id]);
   return retorno as Product | undefined;
 }
 
 const deleteProduct = async (id: number) => {
-   await dbQuery(`DELETE FROM product WHERE id = ?`, [id]);
+   await dbQueryFirst(`DELETE FROM product WHERE id = ?`, [id]);
 }
 
 export const productModel = {

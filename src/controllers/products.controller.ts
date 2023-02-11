@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import { badRequest, internalServerError, notFound, validadeNumber } from '../services/util';
-import { Product, productModel } from '../models/products';
+import { badRequest, internalServerError, notFound, ok, validadeNumber } from '../services/util';
+import { Product, productModel } from '../models/products.model';
 
 
 const insertProduct = (req: Request, res: Response) => {
@@ -35,10 +35,12 @@ const listProducts = ({}: Request, res: Response) => {
     .catch(err => internalServerError(res, err));
 }
 
-const getProduct = ({req}: Request, res: Response) => {
-  const id = parseInt(req.params.id);
+const getProduct = ( { params }: Request, res: Response) => {
+  
+  const { id } = params;    
+  const idParsed = parseInt(id);
   {
-    if(!validadeNumber(id))
+    if(!validadeNumber(idParsed))
        return badRequest(res,'id invalid');
   }
 
