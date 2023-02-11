@@ -1,6 +1,6 @@
 import sqlite3 from 'sqlite3';
 
-const DATABASE_FILE = process.env.DATABASE_FILE;
+const DATABASE_FILE = process.env.;
 if (!DATABASE_FILE)
   throw new Error("DATABASE not found!");
 
